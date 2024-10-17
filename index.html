@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volume</title>
+    <style>
+        body > div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width:100%;
+            height:100vh
+            
+        }
+        div > div{
+            height: 24px;
+            width: 30vw;
+            outline: black solid 2px;
+            cursor: pointer;
+            border-radius: 16px;
+        }
+        span{
+            display: block;
+            width: 20px;
+            height: 20px; 
+            border-radius: 50%;
+            background: black; 
+            position: relative;
+            top:2px;
+        }
+
+       
+
+    </style>
+</head>
+<body>
+    <h1>Volume:<i id="volume"></i>%</h1>
+    <div>
+        <div id="range" >
+            <span></span>
+        </div>
+    </div>
+    <script>
+        var rotate = 45 // -45 , 45
+        var value = 50
+        var rotating = false
+        var rotateScale = NaN
+        const volume=document.getElementById("volume");
+        const range=document.getElementById("range");
+        const input=document.getElementsByTagName("span")[0]
+        const rangeSize = range.getBoundingClientRect()
+        const inputSize = input.getBoundingClientRect()
+        console.log(input)
+        setVolume = () => {
+            volume.innerHTML = value
+            input.style.left = (value/100)*(rangeSize.width-inputSize.width)+"px"
+        }
+        setVolume()
+        setRotation = () => {
+            range.style.transform = `rotate(${(315+rotate)%360}deg)`
+        }
+        setRotation()
+        range.addEventListener("mousedown",(e)=>{
+            rotating = true
+            var mid = rangeSize.width/2
+            rotateScale = e.offsetX-mid
+        })
+        document.body.addEventListener("mouseup",(e)=>{
+            rotating = false
+        })
+        document.body.addEventListener("mousemove",(e)=>{
+            if(rotating)
+            {
+                console.log(e)
+            }
+        })
+        
+        
+    </script>
+    </body>
+</html>
